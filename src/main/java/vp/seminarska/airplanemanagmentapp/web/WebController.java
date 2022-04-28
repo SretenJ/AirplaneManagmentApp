@@ -12,36 +12,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 import vp.seminarska.airplanemanagmentapp.model.User;
-import vp.seminarska.airplanemanagmentapp.repository.UserRepository;
+import vp.seminarska.airplanemanagmentapp.service.impl.UserDetailsServiceImpl;
+
+import javax.validation.Valid;
 
 @Controller
 public class WebController {
     @Autowired
-    private UserRepository userRepository;
+    private UserDetailsServiceImpl userDetailsService;
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public String showRooms(){
         return "index";
     }
 
-    @RequestMapping("/login.html")
-    public String login(WebRequest request)
+    @GetMapping ("/login")
+    public String login(Model model)
     {
-        return "login.html";
+        return "login";
     }
+//    @PostMapping("/login")
+//    public String login(@Valid User user)
+//    {
+//        if (userDetailsService.login(user))
+//            return "redirect:index";
+//        else
+//            return "loginerorr";
+//    }
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
-
         return "signup_form";
     }
-    @PostMapping("/process_register")
-    public String processRegister(User user) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+    @PostMapping("/register")
+    public String processRegister(@Valid User user) {
 
-        userRepository.save(user);
+        userDetailsService.save(user);
 
         return "register_success";
     }
