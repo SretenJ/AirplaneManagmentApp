@@ -3,10 +3,12 @@ package vp.seminarska.airplanemanagmentapp.model;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -15,17 +17,19 @@ import java.time.LocalDateTime;
 public class Flight {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String origin;
 
     private String destination;
 
-    private LocalDateTime departure_time;
-
-    private LocalDateTime arrival_time;
-
-    private LocalDate date_of_flight;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date departure_time;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date arrival_time;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date date_of_flight;
 
     @OneToOne
     private Airplane aircraft_assigned;

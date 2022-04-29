@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Form</h1>
+    <form action="#" th:action="@{/addflight}" th:object="${flight}" method="post">
+    	<p>Origin: <input type="text" th:field="*{origin}" /></p>
+        <p>Destination: <input type="text" th:field="*{destination}" /></p>
+        <p>Departure Time: <input type="date" th:field="*{departure_time}" /></p>
+        <p>Arrival Time: <input type="date" th:field="*{arrival_time}" /></p>
+        <p>Date of Flight: <input type="date" th:field="*{date_of_flight}" /></p>
+        <p>Passengers: <input type="number" th:field="*{passengers}" /></p>
+        <p>Crew: <input type="number" th:field="*{crew}" /></p>
+        <select class="form-control" id="dropDownList">
+            <option value="0">select option</option>
+            <option th:each="airplane : ${airplanes}" th:field="*{aircraft_assigned}" th:value="${airplane}" th:text="${airplane.getName()}"></option>
+        </select>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
+</body>
+</html>
