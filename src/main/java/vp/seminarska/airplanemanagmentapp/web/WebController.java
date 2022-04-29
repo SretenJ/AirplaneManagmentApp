@@ -51,4 +51,9 @@ public class WebController {
 
         return "register_success";
     }
+    @GetMapping("/flights")
+    public String showFlights(Model model) {
+        model.addAttribute("user", new User());
+        return "listflights.html";
+    }
 }
