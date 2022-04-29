@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl  {
     {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         registrationDto.setPassword(encoder.encode(registrationDto.getPassword()));
-        UserRole memberRole = new UserRole("ADMIN");
+        UserRole memberRole = new UserRole("USER");
         List<UserRole> roles = new ArrayList<>();
         roles.add(memberRole);
         registrationDto.setUserRole(roles);

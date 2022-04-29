@@ -1,6 +1,7 @@
 package vp.seminarska.airplanemanagmentapp.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import vp.seminarska.airplanemanagmentapp.service.impl.FlightService;
 import vp.seminarska.airplanemanagmentapp.service.impl.UserDetailsServiceImpl;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -50,10 +52,25 @@ public class WebController {
         return "register_success";
     }
     @GetMapping("/flights")
-    public String showFlights(Model model) {
-        List<Flight> flightList = flightService.listAllFlights();
+    public String showFlights(@RequestParam(required = false) String originSearch,
+                              @RequestParam(required = false) String DestinationSearch,
+                              Model model) {
+        List<Flight> flightList;
+        if (originSearch == null && DestinationSearch == null) {
+            flightList=this.flightService.listAllFlights();
+        } else if (originSearch != null && DestinationSearch == null){
+            flightList=this.flightService.listFlightsByOrigin(originSearch);
+        }else if (originSearch == null && DestinationSearch != null ){
+            flightList=this.flightService.listFlightsByDestination(DestinationSearch);
+        }else if (originSearch != null && DestinationSearch != null ){
+             flightList=this.flightService.listFlightsByOriginAndDestination(originSearch,DestinationSearch);
+       // }else if (originSearch != null && DestinationSearch == null && DepertureTimeBefore != null){
+       // flightList=this.flightService.listFlightsByOriginAndTime(originSearch,DepertureTimeBefore);
+       // }else if (originSearch == null && DestinationSearch != null && DepertureTimeBefore != null){
+       // flightList=this.flightService.listFlightsByDestAndTime(DestinationSearch,DepertureTimeBefore);
+        } else flightList=null;
         model.addAttribute("user", new User());
-        model.addAttribute("flights",flightService.listAllFlights());
+        model.addAttribute("flights",flightList);
         return "listflights";
     }
 
@@ -70,5 +87,14 @@ public class WebController {
         model.addAttribute("flight", flight);
         flightService.save(flight);
         return "redirect:flights";
+    }
+    @PostMapping("/flights/{id}/delete")
+    public String delete(@PathVariable Long id) {
+        this.flightService.delete(id);
+        return "redirect:/flights";
+    }
+    @GetMapping("/search")
+    public String showSearch(Model model){
+        return "search.html";
     }
 }

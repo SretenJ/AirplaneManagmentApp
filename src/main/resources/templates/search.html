@@ -23,10 +23,10 @@
                         <a class="nav-link ms-2" aria-current="page" href="/"><i class="bi bi-house-fill"></i> Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active ms-1" href="/flights"><i class="bi bi-grid-3x3-gap-fill"></i> All Flights</a>
+                        <a class="nav-link ms-1" href="/flights"><i class="bi bi-grid-3x3-gap-fill"></i> All Flights</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link  ms-1" href="/search"><i class="bi bi-search"></i> Search</a>
+                        <a class="nav-link active ms-1" href="/search"><i class="bi bi-search"></i> Search</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
@@ -50,21 +50,18 @@
 
 <br><br><br>
 <div class="container justify-content-center">
-	<h1>Add a new flight</h1>
-
-    <form action="#" th:action="@{/addflight}" th:object="${flight}" method="post">
-    	<p>Origin: <input type="text" th:field="*{origin}" /></p>
-        <p>Destination: <input type="text" th:field="*{destination}" /></p>
-        <p>Departure Time: <input type="date" th:field="*{departure_time}" /></p>
-        <p>Arrival Time: <input type="date" th:field="*{arrival_time}" /></p>
-        <p>Date of Flight: <input type="date" th:field="*{date_of_flight}" /></p>
-        <p>Passengers: <input type="number" th:field="*{passengers}" /></p>
-        <p>Crew: <input type="number" th:field="*{crew}" /></p>
-        <p>Airplane model:<select style="width: 300px;" class="form-control" id="dropDownList">
-            <option value="0">Select an airplane model</option>
-            <option th:each="airplane : ${airplanes}" th:field="*{aircraft_assigned}" th:value="${airplane}" th:text="${airplane.getName()}"></option>
-        </select></p>
-        <p><input type="submit" class="btn btn-dark" value="Submit" /> <input type="reset" value="Reset" class="btn btn-secondary ms-3 " /></p>
+    <h1>Search for a flight</h1>
+<br>
+    <form action="#" th:action="@{/flights}"  method="get">
+        <label for="originSearch">Origin</label>
+        <input id="originSearch" type="text" name="originSearch"/>
+        <br>
+        <label for="DestinationSearch">Destination</label>
+        <input class="mt-2" id="DestinationSearch" type="text" name="DestinationSearch"/>
+        <br>
+      <!--  <label for="DepertureTimeBefore">Departure Time Before</label>
+        <input id="DepertureTimeBefore" type="date" name="DepertureTimeBefore"/> -->
+        <button class="btn btn-dark mt-2" type="submit"><i class="bi bi-search"></i> Search</button>
     </form>
 </div>
 </body>
