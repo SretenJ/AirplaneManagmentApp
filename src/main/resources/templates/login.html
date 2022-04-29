@@ -52,11 +52,11 @@
 
 <div layout:fragment="content" class="container">
   <div class="simple-login-container col-md-4 offset-md-4">
-    <h2>Login Form</h2>
+    <h2>Login</h2>
     <form th:action="@{/login}" method="post">
       <fieldset>
         <div class="form-group">
-          <label for="username" class="form-control-label">Email</label> <input
+          <label for="username" class="form-control-label">Username</label> <input
                 type="text" class="form-control" id="username" name="username"/>
 
         </div>
@@ -65,13 +65,13 @@
                 type="password" class="form-control"
                 id="password" name="password"/>
         </div>
-
+        <br>
         <div class="row">
           <div class="col-xs-6 col-sm-6 col-md-6  form-group">
-            <input type="submit" class="btn btn-lg btn-success btn-block" value="Login">
+            <input type="submit" class="btn btn-lg btn-dark btn-block" value="Login">
           </div>
           <div class="col-xs-6 col-sm-6 col-md-6  form-group">
-            <a href="/register" class="btn btn-lg btn-primary btn-block">Register</a>
+            <a href="/register" class="btn btn-lg btn-secondary btn-block">Register</a>
           </div>
         </div>
       </fieldset>

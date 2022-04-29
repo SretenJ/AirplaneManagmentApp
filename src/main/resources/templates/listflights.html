@@ -10,7 +10,7 @@
   <meta charset="UTF-8">
   <title>Title</title>
 </head>
-<body>
+<body style="background-color: whitesmoke">
 <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
@@ -34,7 +34,7 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item ms-2 mt-1">
             <a sec:authorize="!isAuthenticated()" class="btn btn-sm btn-secondary btn-outline-light" href="/login" role="button">Login &raquo;</a>
-            <p sec:authorize="isAuthenticated()">Username;<span sec:authorize="isAuthenticated()" th:text="${#authentication.getPrincipal().getUsername()}"></span></p>
+            <p sec:authorize="isAuthenticated()">Username;<span style="color: white" sec:authorize="isAuthenticated()" th:text="${#authentication.getPrincipal().getUsername()}"></span></p>
 
           </li>
           <li class="nav-item justify-content-end ms-2 mt-1">
