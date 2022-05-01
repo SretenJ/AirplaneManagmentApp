@@ -61,42 +61,36 @@
 </div>
 
 <div class="container">
+  <div class="accordion">
   <div class="card mt-2 me-2" style="width:300px; display:inline-block;" th:each="flight: ${flights}">
     <img class="card-img-top" src="https://imgeng.jagran.com/images/2021/jul/plane1626437440225.jpg" alt="Image"/>
     <div class="card-body" >
-      <h4 class="card-title" th:text="${flight.origin+'->'+flight.destination}" ></h4>
-      <p class="card-text">Some example text.</p>
+      <h4 class="card-title" th:text="${flight.origin+' -> '+flight.destination}" ></h4>
       <div style="display: inline-block">
-      <button type="button" class="btn btn-secondary" data-toggle=popover title="Show more info">
-
-          <script>
-            $('[data-toggle=popover]').popover({
-              content: $('#myPopoverContent').html(),
-              html: true
-            }).click(function() {
-              $(this).popover('show');
-            });
-          </script>
-      Click to toggle</button>
-      <div id ="myPopoverContent"></div>
-      <div class="menu" style="display: none">
-      <ol>
-        <li th:text="${flight.getOrigin()}"></li>
-        <li th:text="${flight.getDestination()}"></li>
-        <li th:text="${flight.departure_time}"></li>
-        <li th:text="${flight.arrival_time}"></li>
-        <li th:text="${flight.date_of_flight}"></li>
-        <li th:text="${flight.aircraft_assigned}"></li>
-        <li th:text="${flight.passengers}"></li>
-        <li th:text="${flight.crew}"></li>
-      </ol>
+      <a class="btn btn-secondary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">View Details</a>
+      <div class="collapse" id="multiCollapseExample1">
+        <div class="card-body">
+          <div class="menu">
+            <ol>
+              <li th:text="${flight.getOrigin()}"></li>
+              <li th:text="${flight.getDestination()}"></li>
+              <li th:text="${flight.departure_time}"></li>
+              <li th:text="${flight.arrival_time}"></li>
+              <li th:text="${flight.date_of_flight}"></li>
+              <li th:text="${flight.passengers}"></li>
+              <li th:text="${flight.crew}"></li>
+            </ol>
+          </div>
+        </div>
       </div>
     </div>
-    <form class="mt-1 mb-2" method="POST" th:action="@{'/flights/{id}/delete' (id=${flight.id})}"  sec:authorize="hasRole('ROLE_ADMIN')">
-      <button type="submit" class="btn-sm btn-danger"><i class="bi bi-trash3"></i>Delete</button>
-    </form>
+
+      <form class="mt-1 mb-2" method="POST" th:action="@{'/flights/{id}/delete' (id=${flight.id})}"  sec:authorize="hasRole('ROLE_ADMIN')">
+        <button type="submit" class="btn-sm btn-danger"><i class="bi bi-trash3"></i>Delete</button>
+      </form>
     </div>
-    </div>
+  </div>
+  </div>
   </div>
 
 </body>
