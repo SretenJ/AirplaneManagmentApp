@@ -31,7 +31,7 @@ public class Flight {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date_of_flight;
 
-    @OneToOne
+    @ManyToOne
     private Airplane aircraft_assigned;
 
     private int passengers;

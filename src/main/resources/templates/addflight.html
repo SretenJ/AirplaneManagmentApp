@@ -61,8 +61,8 @@
         <p>Passengers: <input type="number" th:field="*{passengers}" /></p>
         <p>Crew: <input type="number" th:field="*{crew}" /></p>
         <p>Airplane model:<select style="width: 300px;" class="form-control" id="dropDownList">
-            <option value="0">Select an airplane model</option>
-            <option th:each="airplane : ${airplanes}" th:field="*{aircraft_assigned}" th:value="${airplane}" th:text="${airplane.getName()}"></option>
+            <option th:object="${flight.aircraft_assigned}">Select an airplane model</option>
+            <option th:each="airplane : ${airplanes}" th:field="*{aircraft_assigned}" th:value="${airplane}" th:name="${airplane}" th:text="${airplane.getName()}"></option>
         </select></p>
         <p><input type="submit" class="btn btn-dark" value="Submit" /> <input type="reset" value="Reset" class="btn btn-secondary ms-3 " /></p>
     </form>

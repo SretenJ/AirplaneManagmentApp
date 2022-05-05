@@ -38,4 +38,7 @@ public class Airplane {
     @Enumerated(EnumType.STRING)
     private AirplaneType type;
 
+    @OneToMany
+    private List<Flight> flightList;
+
 }

@@ -74,9 +74,9 @@
             <ol>
               <li th:text="${flight.getOrigin()}"></li>
               <li th:text="${flight.getDestination()}"></li>
-              <li th:text="${flight.departure_time}"></li>
-              <li th:text="${flight.arrival_time}"></li>
-              <li th:text="${flight.date_of_flight}"></li>
+              <li th:text="${#dates.format(flight.departure_time,'dd-MM-yyyy')}"></li>
+              <li th:text="${#dates.format(flight.arrival_time,'dd-MM-yyyy')}"></li>
+              <li th:text="${#dates.format(flight.date_of_flight,'dd-MM-yyyy')}"></li>
               <li th:text="${flight.passengers}"></li>
               <li th:text="${flight.crew}"></li>
             </ol>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.thymeleaf.util.StringUtils;
 import vp.seminarska.airplanemanagmentapp.model.Flight;
 import vp.seminarska.airplanemanagmentapp.model.User;
 import vp.seminarska.airplanemanagmentapp.service.AirPlaneService;
@@ -56,19 +57,21 @@ public class WebController {
                               @RequestParam(required = false) String DestinationSearch,
                               Model model) {
         List<Flight> flightList;
-        if (originSearch == null && DestinationSearch == null) {
+        if (StringUtils.isEmpty(originSearch) && StringUtils.isEmpty(DestinationSearch))
+        {
             flightList=this.flightService.listAllFlights();
-        } else if (originSearch != null && DestinationSearch == null){
+        }
+        else if (!StringUtils.isEmpty(originSearch) && StringUtils.isEmpty(DestinationSearch))
+        {
             flightList=this.flightService.listFlightsByOrigin(originSearch);
-        }else if (originSearch == null && DestinationSearch != null ){
+        }
+        else if (StringUtils.isEmpty(originSearch) && !StringUtils.isEmpty(DestinationSearch))
+        {
             flightList=this.flightService.listFlightsByDestination(DestinationSearch);
-        }else if (originSearch != null && DestinationSearch != null ){
+        }
+        else {
              flightList=this.flightService.listFlightsByOriginAndDestination(originSearch,DestinationSearch);
-       // }else if (originSearch != null && DestinationSearch == null && DepertureTimeBefore != null){
-       // flightList=this.flightService.listFlightsByOriginAndTime(originSearch,DepertureTimeBefore);
-       // }else if (originSearch == null && DestinationSearch != null && DepertureTimeBefore != null){
-       // flightList=this.flightService.listFlightsByDestAndTime(DestinationSearch,DepertureTimeBefore);
-        } else flightList=null;
+        }
         model.addAttribute("user", new User());
         model.addAttribute("flights",flightList);
         return "listflights";
