@@ -1,11 +1,8 @@
 package vp.seminarska.airplanemanagmentapp.model;
 
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.GenericGenerators;
 import vp.seminarska.airplanemanagmentapp.model.enumerators.AirplaneType;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -38,7 +35,7 @@ public class Airplane {
     @Enumerated(EnumType.STRING)
     private AirplaneType type;
 
-    @OneToMany
+    @OneToMany(mappedBy = "airplane")
     private List<Flight> flightList;
 
 }

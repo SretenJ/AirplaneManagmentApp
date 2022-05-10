@@ -1,13 +1,11 @@
 package vp.seminarska.airplanemanagmentapp.model;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.beans.Transient;
 import java.util.Date;
 
 @Entity
@@ -15,6 +13,7 @@ import java.util.Date;
 @Setter
 @Table(name="flight")
 public class Flight {
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,15 +25,25 @@ public class Flight {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date departure_time;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date arrival_time;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date_of_flight;
 
-    @ManyToOne
-    private Airplane aircraft_assigned;
+    @ManyToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name="airplane_id")
+    private Airplane airplane;
 
     private int passengers;
 
     private int crew;
+
+    @Transient
+    public Airplane getAirplane()
+    {
+        return this.airplane;
+    }
+
 }

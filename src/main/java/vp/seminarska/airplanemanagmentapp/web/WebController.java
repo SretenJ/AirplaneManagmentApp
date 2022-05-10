@@ -1,14 +1,9 @@
 package vp.seminarska.airplanemanagmentapp.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.MediaType;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 import org.thymeleaf.util.StringUtils;
 import vp.seminarska.airplanemanagmentapp.model.Flight;
 import vp.seminarska.airplanemanagmentapp.model.User;
@@ -17,7 +12,6 @@ import vp.seminarska.airplanemanagmentapp.service.impl.FlightService;
 import vp.seminarska.airplanemanagmentapp.service.impl.UserDetailsServiceImpl;
 
 import javax.validation.Valid;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -95,6 +89,12 @@ public class WebController {
     public String delete(@PathVariable Long id) {
         this.flightService.delete(id);
         return "redirect:/flights";
+    }
+    @GetMapping("/flights/{id}/details")
+    public String viewDetails(@PathVariable Long id, Model model)
+    {
+        model.addAttribute("flight",this.flightService.findById(id));
+        return "flightdetails";
     }
     @GetMapping("/search")
     public String showSearch(Model model){

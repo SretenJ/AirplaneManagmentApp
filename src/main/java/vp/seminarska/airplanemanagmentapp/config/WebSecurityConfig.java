@@ -1,6 +1,7 @@
 package vp.seminarska.airplanemanagmentapp.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -18,32 +19,16 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
+@ConfigurationProperties(prefix = "api")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsServiceImpl userDetailsService;
 
+    private String key;
     @Autowired
     private DataSource dataSource;
     public WebSecurityConfig(UserDetailsServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
-  /*  @Override
-    protected void configure(final HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/login*").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login.html")
-                .defaultSuccessUrl("/index.html",true)
-                .failureUrl("/login.html?error=true")
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .deleteCookies("JSESSIONID");
-        // ...
-    }*/
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
