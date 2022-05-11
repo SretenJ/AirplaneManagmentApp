@@ -2,6 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+          crossorigin=""/>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+            integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+            crossorigin=""></script>
+    <style>
+        #map {height: 180px;}
+    </style>
     <title>Title</title>
 </head>
 
@@ -20,5 +30,24 @@
         <td th:text="${flight.airplane}">[employees.type]</td>
     </tr>
 </table>
+<div id="map">
+    <script th:inline="javascript">
+        let latlng;
+        var map;
+        navigator.geolocation.getCurrentPosition((position)=> {
+            const p = position.coords;
+            console.log(p.latitude, p.longitude);
+            map = L.map('map').setView([p.longitude,p.latitude], 13);
+        })
+        map = Location().
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 15,
+                minZoom: 6,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }
+        ).addTo(map);
+    </script>
+</div>
 </body>
 </html>
+
