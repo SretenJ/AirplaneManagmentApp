@@ -1,6 +1,7 @@
 package vp.seminarska.airplanemanagmentapp.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +10,12 @@ import vp.seminarska.airplanemanagmentapp.model.Flight;
 import vp.seminarska.airplanemanagmentapp.model.User;
 import vp.seminarska.airplanemanagmentapp.service.AirPlaneService;
 import vp.seminarska.airplanemanagmentapp.service.impl.FlightService;
+import vp.seminarska.airplanemanagmentapp.service.impl.GeocodingService;
 import vp.seminarska.airplanemanagmentapp.service.impl.UserDetailsServiceImpl;
 
 import javax.validation.Valid;
+import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -23,6 +27,9 @@ public class WebController {
     private FlightService flightService;
     @Autowired
     private AirPlaneService airPlaneService;
+    @Autowired
+    private GeocodingService geocodingService;
+
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public String showRooms(){
         return "index";
@@ -91,9 +98,15 @@ public class WebController {
         return "redirect:/flights";
     }
     @GetMapping("/flights/{id}/details")
-    public String viewDetails(@PathVariable Long id, Model model)
-    {
-        model.addAttribute("flight",this.flightService.findById(id));
+    public String viewDetails(@PathVariable Long id, Model model) throws JSONException, SQLException, URISyntaxException {
+        Flight flight = this.flightService.findById(id);
+        List<String> originCoords = geocodingService.LatLngParse(flight.getOrigin());
+        List<String> destCoords = geocodingService.LatLngParse(flight.getDestination());
+        System.out.println(originCoords);
+        System.out.println(destCoords);
+        model.addAttribute("flight",flight);
+        model.addAttribute("origin",originCoords);
+        model.addAttribute("destination",destCoords);
         return "flightdetails";
     }
     @GetMapping("/search")

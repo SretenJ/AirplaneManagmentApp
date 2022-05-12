@@ -9,8 +9,13 @@
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
             integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
             crossorigin=""></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     <style>
-        #map {height: 180px;}
+        #map {
+            height: 400px;
+            width: 500px;
+        }
     </style>
     <title>Title</title>
 </head>
@@ -30,22 +35,38 @@
         <td th:text="${flight.airplane}">[employees.type]</td>
     </tr>
 </table>
-<div id="map">
+<div id="map" class="mr-0 align-middle col-6">
+
     <script th:inline="javascript">
-        let latlng;
-        var map;
-        navigator.geolocation.getCurrentPosition((position)=> {
-            const p = position.coords;
-            console.log(p.latitude, p.longitude);
-            map = L.map('map').setView([p.longitude,p.latitude], 13);
-        })
-        map = Location().
+        var origin = [[${origin}]];
+        latOrigin = origin[0];
+        lonOrigin = origin[1];
+        var destination = [[${destination}]];
+        latdest = destination[0]
+        longdest = destination[1]
+        var map = L.map('map').setView([51,0], 13);
+        var lc = L.control.locate({
+            position: 'topright',
+            strings: {
+                title: "My location"
+            },
+            setView: 'always',
+            drawMarker: 'true'
+        }).addTo(map);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 15,
-                minZoom: 6,
-                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }
+            maxZoom: 15,
+            minZoom: 1,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }
         ).addTo(map);
+        map.locate({setView : true,drawMarker: true});
+        console.log(typeof latOrigin)
+        L.marker([Number(latOrigin),Number(lonOrigin)]).addTo(map)
+            .bindPopup('Origin')
+            .openPopup();
+        L.marker([Number(latdest),Number(longdest)]).addTo(map)
+            .bindPopup('Destination')
+            .openPopup();
     </script>
 </div>
 </body>
