@@ -60,13 +60,21 @@
         }
         ).addTo(map);
         map.locate({setView : true,drawMarker: true});
-        console.log(typeof latOrigin)
-        L.marker([Number(latOrigin),Number(lonOrigin)]).addTo(map)
+        let marker1 = L.marker([Number(latOrigin),Number(lonOrigin)]).addTo(map)
             .bindPopup('Origin')
             .openPopup();
-        L.marker([Number(latdest),Number(longdest)]).addTo(map)
+        let marker2 = L.marker([Number(latdest),Number(longdest)]).addTo(map)
             .bindPopup('Destination')
             .openPopup();
+        var latlngs = Array();
+        latlngs.push(marker1.getLatLng());
+
+        latlngs.push(marker2.getLatLng());
+
+
+        var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
+
+        map.fitBounds(polyline.getBounds());
     </script>
 </div>
 </body>
