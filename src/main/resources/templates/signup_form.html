@@ -21,13 +21,13 @@
       <div class="collapse navbar-collapse ml-5" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0 ml-3">
           <li class="nav-item">
-            <a class="nav-link ms-2" aria-current="page" href="/"><i class="bi bi-house-fill"></i> Home</a>
+            <a class="nav-link active ms-2" aria-current="page" href="/"><i class="bi bi-house-fill"></i> Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link ms-1" href="/flights"><i class="bi bi-grid-3x3-gap-fill"></i> All Flights</a>
+            <a class="nav-link  ms-1" href="/flights"><i class="bi bi-grid-3x3-gap-fill"></i> All Flights</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link  ms-1" href="/search"><i class="bi bi-search"></i> Search</a>
+            <a class="nav-link ms-1" href="/search"><i class="bi bi-search"></i> Search</a>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -46,13 +46,13 @@
     </div>
   </nav>
 </header>
-<br> <br> <br>
-<div class="container">
+<br> <br> <br>  <br> <br> <br>
+<div class="container" style="padding-left: 300px; padding-right: 300px" >
 <form th:action="@{/register}" th:object="${user}" method="post">
   <div class="row">
     <div class="col-md-12 form-group">
       <label for="username" class="form-control-label">Username</label>
-      <input type="text" class="form-control" placeholder="Username" id="username" th:field="*{username}">
+      <input type="text" class="form-control" placeholder="Enter your Username" id="username" th:field="*{username}">
     </div>
   </div>
   <div class="row">
@@ -68,7 +68,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12 form-group">
+    <div class="col-md-12 form-group" style="padding-top: 10px">
       <input type="submit" class="btn btn-dark btn-block">
     </div>
   </div>

@@ -1,10 +1,16 @@
 package vp.seminarska.airplanemanagmentapp.web;
 
+import com.itextpdf.html2pdf.ConverterProperties;
+import com.itextpdf.html2pdf.HtmlConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
 import org.thymeleaf.util.StringUtils;
 import vp.seminarska.airplanemanagmentapp.model.Flight;
 import vp.seminarska.airplanemanagmentapp.model.User;
@@ -13,7 +19,12 @@ import vp.seminarska.airplanemanagmentapp.service.impl.FlightService;
 import vp.seminarska.airplanemanagmentapp.service.impl.GeocodingService;
 import vp.seminarska.airplanemanagmentapp.service.impl.UserDetailsServiceImpl;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.List;
@@ -22,6 +33,9 @@ import java.util.List;
 @CrossOrigin
 public class WebController {
     @Autowired
+    ServletContext servletContext;
+    private final TemplateEngine templateEngine;
+    @Autowired
     private UserDetailsServiceImpl userDetailsService;
     @Autowired
     private FlightService flightService;
@@ -29,6 +43,10 @@ public class WebController {
     private AirPlaneService airPlaneService;
     @Autowired
     private GeocodingService geocodingService;
+
+    public WebController(TemplateEngine templateEngine) {
+        this.templateEngine = templateEngine;
+    }
 
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public String showRooms(){
@@ -112,5 +130,42 @@ public class WebController {
     @GetMapping("/search")
     public String showSearch(Model model){
         return "search.html";
+    }
+
+    @RequestMapping(path = "flights/{id}/ticket-pdf")
+    public ResponseEntity<?> getPDF(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        /* Do Business Logic*/
+
+        Flight flight = flightService.findById(id);
+
+        /* Create HTML using Thymeleaf template Engine */
+
+        WebContext context = new WebContext(request, response, servletContext);
+        context.setVariable("flight", flight);
+
+        String orderHtml = templateEngine.process("htmltopdf", context);
+
+        /* Setup Source and target I/O streams */
+
+        ByteArrayOutputStream target = new ByteArrayOutputStream();
+
+        /*Setup converter properties. */
+        ConverterProperties converterProperties = new ConverterProperties();
+        converterProperties.setBaseUri("http://localhost:8080");
+
+        /* Call convert method */
+        HtmlConverter.convertToPdf(orderHtml, target, converterProperties);
+
+        /* extract output as bytes */
+        byte[] bytes = target.toByteArray();
+
+
+        /* Send the response as downloadable PDF */
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(bytes);
+
     }
 }
