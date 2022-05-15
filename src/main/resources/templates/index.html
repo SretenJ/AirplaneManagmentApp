@@ -11,38 +11,38 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <meta charset="UTF-8">
-    <title>FINKI AIRLINES</title>
+    <title>GoTransit</title>
 </head>
 <body style="background-color: whitesmoke">
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
 
-            <a class="navbar-brand" href="/"> FINKI AIRLINES</a>
+            <a class="navbar-brand ms-5" href="/"><img src="logo.png" alt="GoTransit" height="50px" width="170px"> </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse ml-5" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0 ml-3">
                     <li class="nav-item">
-                        <a class="nav-link active ms-2" aria-current="page" href="/"><i class="bi bi-house-fill"></i> Home</a>
+                        <a class="nav-link  h5 ms-3 mt-2" aria-current="page" href="/"><i class="bi bi-house-fill"></i> Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link  ms-1" href="/flights"><i class="bi bi-grid-3x3-gap-fill"></i> All Flights</a>
+                        <a class="nav-link  h5 ms-3 mt-2" href="/flights"><i class="bi bi-grid-3x3-gap-fill"></i> All Flights</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ms-1" href="/search"><i class="bi bi-search"></i> Search</a>
+                        <a class="nav-link  h5 ms-3 mt-2" href="/search"><i class="bi bi-search"></i> Search</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item ms-2 mt-1">
-                        <a sec:authorize="!isAuthenticated()" class="btn btn-sm btn-secondary btn-outline-light" href="/login" role="button"><i class="bi bi-box-arrow-in-right"></i> Login &raquo;</a>
-                        <p sec:authorize="isAuthenticated()"><span style="color: white" sec:authorize="isAuthenticated()" th:text="${#authentication.getPrincipal().getUsername()}"><i class="bi bi-person-fill"></i></span></p>
+                    <li class="nav-item  ms-3 mt-1">
+                        <a sec:authorize="!isAuthenticated()" class="btn btn-secondary btn-outline-light" href="/login" role="button"><i class="bi bi-box-arrow-in-right"></i> Login &raquo;</a>
+                        <p class="mt-1" sec:authorize="isAuthenticated()"><span style="color: white; font-size: larger" sec:authorize="isAuthenticated()" th:text="${#authentication.getPrincipal().getUsername()}"><i class="bi bi-person-fill"></i></span></p>
 
                     </li>
-                    <li class="nav-item justify-content-end ms-2 mt-1">
-                        <a sec:authorize="!isAuthenticated()" class="btn btn-sm btn-secondary btn-outline-light" href="/register" role="button"><i class="bi bi-person-plus-fill"></i> Register &raquo; </a>
-                        <a sec:authorize="isAuthenticated()" class="btn btn-sm btn-secondary" href="/logout" role="button"><i class="bi bi-box-arrow-in-left"></i> Logout &raquo;</a>
+                    <li class="nav-item justify-content-end ms-3 mt-1">
+                        <a sec:authorize="!isAuthenticated()" class="btn  btn-secondary btn-outline-light" href="/register" role="button"><i class="bi bi-person-plus-fill"></i> Register &raquo; </a>
+                        <a sec:authorize="isAuthenticated()" class="btn  btn-secondary" href="/logout" role="button"><i class="bi bi-box-arrow-in-left"></i> Logout &raquo;</a>
                     </li>
                 </ul>
             </div>
@@ -91,6 +91,7 @@
         </button>
     </div>
 <br>
+    <!--
     <div id="cal-heatmap" >
         <script th:inline="javascript" type="text/javascript">
             let cal =  new CalHeatMap();
@@ -102,7 +103,7 @@
         </script>
     </div>
 </div>
-
+-->
 
 
 </body>
